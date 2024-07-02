@@ -25,7 +25,7 @@ importers:
         version: 2.1.4(react@18.3.1)
       '@hookform/resolvers':
         specifier: ^3.6.0
-        version: 3.6.0(react-hook-form@7.52.0(react@18.3.1))
+        version: 3.7.0(react-hook-form@7.52.0(react@18.3.1))
       cookies-next:
         specifier: ^4.2.1
         version: 4.2.1
@@ -973,8 +973,8 @@ packages:
     peerDependencies:
       react: '>= 16'
 
-  '@hookform/resolvers@3.6.0':
-    resolution: {integrity: sha512-UBcpyOX3+RR+dNnqBd0lchXpoL8p4xC21XP8H6Meb8uve5Br1GCnmg0PcBoKKqPKgGu9GHQ/oygcmPrQhetwqw==}
+  '@hookform/resolvers@3.7.0':
+    resolution: {integrity: sha512-42p5X18noBV3xqOpTlf2V5qJZwzNgO4eLzHzmKGh/w7z4+4XqRw5AsESVkqE+qwAuRRlg2QG12EVEjPkrRIbeg==}
     peerDependencies:
       react-hook-form: ^7.0.0
 
@@ -4754,7 +4754,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  '@hookform/resolvers@3.6.0(react-hook-form@7.52.0(react@18.3.1))':
+  '@hookform/resolvers@3.7.0(react-hook-form@7.52.0(react@18.3.1))':
     dependencies:
       react-hook-form: 7.52.0(react@18.3.1)
 

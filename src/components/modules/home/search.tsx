@@ -12,12 +12,12 @@ import { css, cx } from "@/styled-system/css";
 import { Center, Flex, Grid, GridItem } from "@/styled-system/jsx";
 import { useOutsideClick } from "@chakra-ui/hooks";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { type ChangeEvent, type RefObject, useRef, useState } from "react";
 import { useDebounce } from "react-use";
 
 export default function HomeSearch({ isNav = false }: { isNav?: boolean }) {
 	const searchRef = useRef<HTMLDivElement>(null);
-	const [query, setQuery] = useState<string | null>(null);
+	const [query, setQuery] = useState<string>("");
 	const [active, setActive] = useState<boolean>(false);
 
 	const [
@@ -30,18 +30,15 @@ export default function HomeSearch({ isNav = false }: { isNav?: boolean }) {
 		handler: () => setActive(false),
 	});
 
-	useEffect(() => {
-		if (query?.length === 0) setQuery(null);
-	}, [query]);
-
 	const [ready] = useDebounce(
-		() => {
-			if (query)
-				refetch({
-					input: {
-						query: query ?? undefined,
-					},
-				});
+		async () => {
+			if (!query?.length) return;
+
+			await refetch({
+				input: {
+					query: query,
+				},
+			});
 		},
 		500,
 		[query],
@@ -54,6 +51,7 @@ export default function HomeSearch({ isNav = false }: { isNav?: boolean }) {
 			alignItems={isNav ? "end" : "initial"}
 			gap={2}
 			pos={isNav ? "initial" : "relative"}
+			display={{ base: isNav ? "none" : "flex", md: "flex" }}
 		>
 			<Input
 				autoComplete="off"
@@ -75,7 +73,7 @@ export default function HomeSearch({ isNav = false }: { isNav?: boolean }) {
 					setActive(true);
 				}}
 				onBlur={() => setActive(true)}
-				ref={searchRef}
+				ref={searchRef as RefObject<HTMLInputElement>}
 				placeholder={"Search bots..."}
 			/>
 			<AnimatePresence>
@@ -92,6 +90,7 @@ export default function HomeSearch({ isNav = false }: { isNav?: boolean }) {
 								mt: 12,
 								w: "full",
 								maxW: isNav ? "1/2" : "full",
+								zIndex: 100,
 							}),
 						)}
 					>

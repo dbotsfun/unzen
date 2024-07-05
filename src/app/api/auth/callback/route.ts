@@ -1,20 +1,23 @@
-import { makeClient } from "@/lib/constants/apollo-client";
-import { CreateSessionDocument, type Mutation } from "@/lib/graphql/apollo";
+import { SessionClientDocument } from "@/lib/constants/apollo/cache-queries";
+import { apolloClient } from "@/lib/constants/apollo/client-rsc";
+import {
+	CreateSessionDocument,
+	type Mutation,
+	SessionDocument,
+	type SessionQuery,
+} from "@/lib/graphql/apollo";
 import { type NextRequest, NextResponse } from "next/server";
 
-const apolloClient = makeClient();
 const url = process.env.NEXT_PUBLIC_URL ?? "https://dbots.fun";
-
-const quickRedirect = (endpoint: string) =>
-	NextResponse.redirect(new URL(endpoint, url));
 
 export async function GET(req: NextRequest) {
 	const code = req.nextUrl.searchParams.get("code");
 
-	if (!code)
-		return quickRedirect(
-			`/?e=${encodeURIComponent("No code provided from Discord")}`,
+	if (!code) {
+		return NextResponse.redirect(
+			`${url}/?e=${encodeURIComponent("No code provided from Discord")}`,
 		);
+	}
 
 	const { data: auth } = await apolloClient.mutate<Mutation>({
 		mutation: CreateSessionDocument,
@@ -26,14 +29,50 @@ export async function GET(req: NextRequest) {
 		errorPolicy: "ignore",
 	});
 
-	if (!auth || !auth.createSession.access_token)
-		return quickRedirect(
-			`/?e=${encodeURIComponent("No access_token provided from Discord")}`,
+	if (!auth || !auth.createSession.access_token) {
+		return NextResponse.redirect(
+			`${url}/?e=${encodeURIComponent("No access_token provided from Discord")}`,
 		);
+	}
 
-	const finalResponse = quickRedirect(
-		`/auth/cookie?c=${encodeURIComponent(auth.createSession.access_token)}&e=${encodeURIComponent(auth.createSession.expires_in)}`,
+	const expiresSession = new Date();
+	expiresSession.setSeconds(
+		expiresSession.getSeconds() + auth.createSession.expires_in,
 	);
 
-	return finalResponse;
+	const userInfo = await apolloClient.query<SessionQuery>({
+		query: SessionDocument,
+		fetchPolicy: "no-cache",
+		context: {
+			headers: {
+				authorization: `Bearer ${auth.createSession.access_token}`,
+			},
+		},
+	});
+
+	apolloClient.writeQuery({
+		query: SessionClientDocument,
+		data: {
+			me: {
+				token: auth.createSession.access_token,
+				token_expires: expiresSession.getTime(),
+				id: userInfo.data.me.id,
+				username: userInfo.data.me.username,
+				avatar: userInfo.data.me.avatar,
+				permissions: userInfo.data.me.permissions,
+			},
+		},
+		id: auth.createSession.access_token,
+	});
+
+	const response = NextResponse.redirect(url);
+
+	response.cookies.set("session", auth.createSession.access_token, {
+		path: "/",
+		secure: false,
+		httpOnly: false,
+		expires: expiresSession,
+	});
+
+	return response;
 }

@@ -8,13 +8,16 @@ export function formatDateSince(dateStr: string): string {
 	const diffMs = now.getTime() - date.getTime();
 	const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-	if (diffDays === 0) return "Today";
-	if (diffDays === 1) return "Yesterday";
+	if (diffDays === 0) return "today";
+	if (diffDays === 1) return "yesterday";
 	return `${diffDays} days ago`;
 }
 
 export function handleError(error: ApolloError) {
+	console.error(error);
 	const errorMessage = (e: GraphQLError) => e.message;
 
-	return error.graphQLErrors.map((e) => toast.error(errorMessage(e)));
+	return error.graphQLErrors
+		? error.graphQLErrors.map((e) => toast.error(errorMessage(e)))
+		: toast.error("Unknown error");
 }

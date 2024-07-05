@@ -1,15 +1,28 @@
-"use client";
-
 import BotTabsMain from "@/components/modules/bots/tabs/main";
 import CertifiedBadge from "@/components/shared/bot/certified-badge";
 import LineTitle from "@/components/shared/feedback/line-title";
+import ImageBackground from "@/components/shared/layout/image-background";
+import {
+	Alert,
+	AlertIcon,
+	AlertContent,
+	AlertTitle,
+	AlertDescription,
+} from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { LinkButton, buttonIcon } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/button";
+import { buttonIcon } from "@/components/ui/button-icon";
 import { Heading } from "@/components/ui/heading";
 import Image from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
-import { useSingleBotSuspenseQuery } from "@/lib/graphql/apollo";
-import useAuthStore from "@/lib/stores/auth";
+import { SessionClientDocument } from "@/lib/constants/apollo/cache-queries";
+import { apolloClient } from "@/lib/constants/apollo/client-rsc";
+import {
+	BotStatus,
+	type SessionQuery,
+	SingleBotDocument,
+	type SingleBotQuery,
+} from "@/lib/graphql/apollo";
 import { getAvatar, getDefaultInvite } from "@/lib/utils/discord";
 import { formatDateSince } from "@/lib/utils/format";
 import { css } from "@/styled-system/css";
@@ -18,20 +31,27 @@ import { CalendarIcon } from "@heroicons/react/16/solid";
 import {
 	ChartBarIcon,
 	ChevronUpIcon,
+	ExclamationTriangleIcon,
 	PlusIcon,
 } from "@heroicons/react/24/solid";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
 export const dynamic = "force-dynamic";
 
-export default function Page({ params }: { params: { id: string } }) {
-	const { data: auth } = useAuthStore();
+export default async function Page({ params }: { params: { id: string } }) {
+	const auth = apolloClient.readQuery<SessionQuery>({
+		query: SessionClientDocument,
+		id: cookies().get("session")?.value,
+	});
+
 	const {
 		data: { getBot },
 		error,
-	} = useSingleBotSuspenseQuery({
+	} = await apolloClient.query<SingleBotQuery>({
+		query: SingleBotDocument,
 		variables: {
 			input: {
 				id: params.id,
@@ -44,34 +64,26 @@ export default function Page({ params }: { params: { id: string } }) {
 	const userIsOwner = !!getBot.owners.find((o) => o.id === auth?.me.id);
 	const hasAnyLink =
 		!!getBot.website ?? !!getBot.github ?? !!getBot.supportServer;
-	const banner = getBot.banner ?? getAvatar(getBot.id, getBot.avatar);
+	const avatar = getAvatar(getBot.id, getBot.avatar);
+	const banner = getBot.banner ?? avatar;
 
 	return (
 		<React.Fragment>
-			<Box position={"absolute"} inset={0} zIndex={-1}>
-				<Image
-					alt="bot avatar as background"
-					draggable={false}
-					width={1000}
-					height={1000}
-					src={banner}
-					className={css({
-						position: "absolute",
-						w: "full",
-						zIndex: -1,
-						objectFit: "cover",
-						objectPosition: "center top",
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 0,
-						opacity: 0.2,
-						h: "100vh",
-						maskImage:
-							"radial-gradient(circle at top, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0))",
-					})}
-				/>
-			</Box>
+			<ImageBackground image={banner} />
+			{getBot.status !== BotStatus.Approved && (
+				<Alert mb={4}>
+					<AlertIcon>
+						<ExclamationTriangleIcon />
+					</AlertIcon>
+					<AlertContent>
+						<AlertTitle>Note</AlertTitle>
+						<AlertDescription>
+							This bot is {getBot.status} and only you and the reviewers are
+							able to see this page
+						</AlertDescription>
+					</AlertContent>
+				</Alert>
+			)}
 			<Flex flexDir={"column"}>
 				<Flex
 					flexDir={{ lg: "row", base: "column" }}
@@ -88,8 +100,8 @@ export default function Page({ params }: { params: { id: string } }) {
 							alt="bot avatar"
 							width={100}
 							height={100}
-							src={getAvatar(getBot.id, getBot.avatar)}
-							className={css({ rounded: "full" })}
+							src={avatar}
+							className={css({ rounded: "2xl" })}
 						/>
 						<Flex alignItems={"center"} gap={1}>
 							<Heading size="4xl">{getBot.name}</Heading>

@@ -8,7 +8,7 @@ import {
 } from "@/lib/graphql/apollo";
 import { type NextRequest, NextResponse } from "next/server";
 
-const url = process.env.NEXT_PUBLIC_URL ?? "https://dbots.fun";
+const url = process.env.NEXT_PUBLIC_URL ?? "https://dbots.fun/";
 
 export async function GET(req: NextRequest) {
 	const code = req.nextUrl.searchParams.get("code");

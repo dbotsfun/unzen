@@ -26,6 +26,7 @@ export function makeClientSide(authToken?: string) {
 	const authLink = setContext((_, { headers }) => {
 		return {
 			headers: {
+				mode: "no-cors",
 				...headers,
 				...(authToken
 					? {

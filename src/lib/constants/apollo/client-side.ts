@@ -7,8 +7,10 @@ import {
 	InMemoryCache,
 	SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support";
+import { parseCookies } from "nookies";
 
 export function makeClientSide(authToken?: string) {
+	const { session } = parseCookies()
 	const httpLink = new HttpLink({
 		// this needs to be an absolute url, as relative urls cannot be used in SSR
 		uri: process.env.NEXT_PUBLIC_API_URL,
@@ -27,7 +29,7 @@ export function makeClientSide(authToken?: string) {
 				...headers,
 				...(authToken
 					? {
-							Authorization: `Bearer ${authToken}`,
+							Authorization: `Bearer ${authToken ?? session}`,
 						}
 					: {}),
 			},

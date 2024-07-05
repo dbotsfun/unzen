@@ -9,7 +9,7 @@ export default function AuthUser() {
 	const token = cookies().get("session")?.value;
 	const auth = apolloClient.readQuery<SessionQuery>({
 		query: SessionClientDocument,
-		id: cookies().get("session")?.value,
+		id: token,
 	});
 
 	if (!auth) {

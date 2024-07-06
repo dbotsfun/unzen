@@ -25,6 +25,7 @@ export const { getClient } = registerApolloClient(() => {
 
 		return {
 			headers: {
+				mode: "no-cors",
 				...headers,
 				...(headers?.Authorization
 					? { Authorization: headers.Authorization }

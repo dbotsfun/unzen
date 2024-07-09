@@ -15,8 +15,8 @@ importers:
         specifier: ^0.11.2
         version: 0.11.2(@apollo/client@3.10.8(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.9.0))(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@chakra-ui/hooks':
-        specifier: 3.0.0-next.4
-        version: 3.0.0-next.4(react@18.3.1)
+        specifier: 3.0.0-next.11
+        version: 3.0.0-next.11(react@18.3.1)
       '@headlessui/react':
         specifier: ^2.1.1
         version: 2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -500,13 +500,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@chakra-ui/hooks@3.0.0-next.4':
-    resolution: {integrity: sha512-G6pTfpNxNbxLvTJoCuBbO1pU3Oi8KKQLOkTrECA1xPaHiMlQQfR/cVEynDTujdWFXrQq3KC3mQ0hA++3bwx/tQ==}
+  '@chakra-ui/hooks@3.0.0-next.11':
+    resolution: {integrity: sha512-UJp4oXWdvhHlhzNhxdUR56OZAlsjjZPZVf52YPWDUpc/+RGDvJedw8DTswOk8DxnCcPn8Hc52qLw+wTIEoYyMA==}
     peerDependencies:
       react: '>=18'
 
-  '@chakra-ui/utils@3.0.0-next.4':
-    resolution: {integrity: sha512-/JIPkfM84UK6r9zG4cIDTcltWVOLUGdwj6T3n9iVCnuCULSAAtxrwmtd1wfSr2pBS9xfLXvpummAT7Fv6ljdMA==}
+  '@chakra-ui/utils@3.0.0-next.11':
+    resolution: {integrity: sha512-xrEJS1QTJozwHQfSJexdsnZixjzKjmo4fIH3BdgYy1wb2vCOMDD/JoECn2mArRuLGncQoT0daAWc7JZ6jUma+g==}
 
   '@clack/core@0.3.4':
     resolution: {integrity: sha512-H4hxZDXgHtWTwV3RAVenqcC4VbJZNegbBjlPvzOzCouXtS2y3sDvlO3IsbrPNWuLWPPlYVYPghQdSF64683Ldw==}
@@ -1450,8 +1450,8 @@ packages:
   '@xobotyi/scrollbar-width@1.9.5':
     resolution: {integrity: sha512-N8tkAACJx2ww8vFMneJmaAgmjAG1tnVBZJRLRcx061tmsLRZHSEZSLuGWnwPtunsSLvSqXQ2wfp7Mgqg1I+2dQ==}
 
-  '@zag-js/element-size@0.40.0':
-    resolution: {integrity: sha512-07MJHVdiIclSM3eKY145QhNHDzHknx8igoaxNBLSgQ+K1YD9lo2DfIx5/OikaAlYns6wgyM8Q7uyTeyhrTLcrg==}
+  '@zag-js/element-size@0.60.0':
+    resolution: {integrity: sha512-6dvLkgeFhzXTp17TtH+WHFH/rKzNYBf6/3ZaUYh7/tpYtMclfuBKoo2HSYjZK2qE3tkp/mDNbxj5PF4mUjCsEg==}
 
   acorn@8.12.1:
     resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
@@ -4051,15 +4051,15 @@ snapshots:
   '@biomejs/cli-win32-x64@1.8.3':
     optional: true
 
-  '@chakra-ui/hooks@3.0.0-next.4(react@18.3.1)':
+  '@chakra-ui/hooks@3.0.0-next.11(react@18.3.1)':
     dependencies:
-      '@chakra-ui/utils': 3.0.0-next.4
-      '@zag-js/element-size': 0.40.0
+      '@chakra-ui/utils': 3.0.0-next.11
+      '@zag-js/element-size': 0.60.0
       copy-to-clipboard: 3.3.3
       framesync: 6.1.2
       react: 18.3.1
 
-  '@chakra-ui/utils@3.0.0-next.4': {}
+  '@chakra-ui/utils@3.0.0-next.11': {}
 
   '@clack/core@0.3.4':
     dependencies:
@@ -5280,7 +5280,7 @@ snapshots:
 
   '@xobotyi/scrollbar-width@1.9.5': {}
 
-  '@zag-js/element-size@0.40.0': {}
+  '@zag-js/element-size@0.60.0': {}
 
   acorn@8.12.1: {}
 

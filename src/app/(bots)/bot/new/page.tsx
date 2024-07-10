@@ -47,7 +47,7 @@ export default function Page() {
 
 	const { connect, bindField, isPending, fieldErrors } = useForm({
 		validateOnChange: true,
-		validateOnBlur: false,
+		validateOnBlur: true,
 		onSubmit: (data) => {
 			createBot({
 				variables: {

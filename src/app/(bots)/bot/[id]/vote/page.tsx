@@ -30,6 +30,11 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
+	const auth = apolloClient.readQuery<SessionQuery>({
+		query: SessionClientDocument,
+		id: cookies().get("session")?.value,
+	});
+
 	const {
 		data: { getBot },
 		error: getBotError,
@@ -44,25 +49,27 @@ export default async function Page({ params }: { params: { id: string } }) {
 		},
 	);
 
-	const {
-		data: { canVote },
-		error: canVoteError,
-	} = await apolloClient.query<CanVoteQuery, CanVoteQueryVariables>({
-		query: CanVoteDocument,
-		fetchPolicy: "no-cache",
-		variables: {
-			input: {
-				id: params.id,
+	let canVote = false;
+
+	if (auth) {
+		const { data } = await apolloClient.query<
+			CanVoteQuery,
+			CanVoteQueryVariables
+		>({
+			query: CanVoteDocument,
+			fetchPolicy: "no-cache",
+			variables: {
+				input: {
+					id: params.id,
+				},
 			},
-		},
-	});
+			errorPolicy: "none",
+		});
 
-	const auth = apolloClient.readQuery<SessionQuery>({
-		query: SessionClientDocument,
-		id: cookies().get("session")?.value,
-	});
+		canVote = data?.canVote.canVote ?? false;
+	}
 
-	if (getBotError || canVoteError) return notFound();
+	if (getBotError) return notFound();
 
 	return (
 		<Center>
@@ -73,7 +80,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 					</AlertIcon>
 					<AlertTitle>This page is work-in-progress</AlertTitle>
 				</Alert>
-				<VoteAlert auth={auth} canVote={canVote.canVote} bot={getBot} />
+				<VoteAlert auth={auth} canVote={canVote} bot={getBot} />
 				<Box className={box}>
 					<Flex alignItems={"center"} justifyContent={"space-between"}>
 						<Flex alignItems={"center"} gap={3}>
@@ -89,7 +96,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 								{getBot.certified && <CertifiedBadge />}
 							</Flex>
 						</Flex>
-						<Vote botId={params.id} auth={auth} hasVoted={!canVote.canVote} />
+						<Vote botId={params.id} auth={auth} hasVoted={!canVote} />
 					</Flex>
 				</Box>
 				<LinkButton href={`/bot/${getBot.id}`} mx="auto" size="sm" color="gray">

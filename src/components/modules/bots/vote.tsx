@@ -31,7 +31,8 @@ interface VoteProps {
 export default function Vote({ auth, botId, hasVoted }: VoteProps) {
 	const [voteBot, { loading: votingBot }] = useCreateVoteMutation({
 		onError: handleError,
-		onCompleted: () => {
+		onCompleted: (_, opts) => {
+			opts?.client?.refetchQueries({ include: ["SingleBotVote"] });
 			if (auth) redirect(`/bots/${botId}/vote`);
 			toast.success("Successfully voted!");
 		},

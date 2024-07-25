@@ -4,11 +4,17 @@ import { styled } from "@/styled-system/jsx";
 export const badge = cva({
 	base: {
 		fontWeight: "medium",
-		borderRadius: "lg",
+		borderRadius: "full",
 		w: "fit",
 		display: "inline-flex",
 		alignItems: "center",
 		justifyContent: "center",
+
+		"& svg": {
+			ml: 1,
+			w: 4,
+			h: 4,
+		},
 	},
 	variants: {
 		color: {
@@ -31,6 +37,10 @@ export const badge = cva({
 			primary: {
 				color: "brand.500",
 				bg: "brand.950",
+			},
+			gray: {
+				color: "bg.200",
+				bg: "bg.800",
 			},
 		},
 		size: {

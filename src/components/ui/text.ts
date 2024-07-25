@@ -8,14 +8,18 @@ export const text = cva({
 		letterSpacing: "0",
 		textDecoration: "None",
 		textTransform: "None",
+		color: "bg.100",
 	},
 	variants: {
 		size: {
-			lg: {
-				fontSize: "lg",
-			},
 			md: {
 				fontSize: "md",
+			},
+			sm: {
+				fontSize: "sm",
+			},
+			xs: {
+				fontSize: "xs",
 			},
 		},
 	},

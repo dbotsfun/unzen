@@ -1,44 +1,27 @@
-"use client";
-
-import Spinner from "@/components/shared/spinner";
+import BotsSection from "@/components/shared/bots/section";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { css } from "@/styled-system/css";
-import { Flex } from "@/styled-system/jsx";
-import { IconMoodHappyFilled } from "@tabler/icons-react";
+import { VStack } from "@/styled-system/jsx";
+import { ClockIcon } from "@heroicons/react/24/solid";
+import React from "react";
 
 export default function Page() {
 	return (
-		<Flex flexDir={"column"} gap={2}>
-			<Badge color="primary">
-				Still work-in-progress{" "}
-				<IconMoodHappyFilled size={16} className={css({ ml: 1 })} />
-			</Badge>
-			<Heading size="5xl">Kinu</Heading>
-			<Text>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-				perferendis aperiam culpa error est deleniti molestiae doloremque
-				obcaecati sit sapiente velit, vero asperiores quae, voluptate illo
-				veniam, ullam earum. Magnam!
-			</Text>
-			<Flex gap={2} alignItems={"end"}>
-				<Button size="lg" disabled>
-					Large disabled
-				</Button>
-				<Button size="lg" disabled>
-					<Spinner />
-					Large loading
-				</Button>
-				<Button size="lg">Large</Button>
-				<Button size="md">Medium</Button>
-				<Button size="sm">Small</Button>
-			</Flex>
-			<Flex flexDir={"column"} gap={5}>
-				<Input placeholder="Hello placeholder" />
-			</Flex>
-		</Flex>
+		<VStack alignItems={"start"} gap={10}>
+			<VStack alignItems={"start"} w="full">
+				<Badge color="primary">
+					Coming soon <ClockIcon />
+				</Badge>
+				<Heading size="5xl">dbots.fun</Heading>
+				<Text>
+					All data is mocked for now!!!!!!!!!!!!All data is mocked for
+					now!!!!!!!!!!!!
+				</Text>
+				<Input placeholder="Search bots" />
+			</VStack>
+			<BotsSection rowProps={{ maxBots: 4 }} title="Test" />
+		</VStack>
 	);
 }

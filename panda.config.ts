@@ -1,8 +1,8 @@
 import { defineConfig } from "@pandacss/dev";
 import { getColors } from "theme-colors";
 
-const primaryColors = getColors("#1a9c66");
-const backgroundColors = getColors("#3A3A3A");
+const primaryColors = getColors("#5872fc");
+const backgroundColors = getColors("#1a1a27");
 
 function generateColorTokens(colors: Record<string, string>) {
 	return Object.entries(colors).reduce(

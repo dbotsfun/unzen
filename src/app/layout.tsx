@@ -1,5 +1,4 @@
 import Header from "@/components/shared/header";
-import { css } from "@/styled-system/css";
 import { Container } from "@/styled-system/jsx";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -9,9 +8,8 @@ import "@/styles/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Next.js template",
-	description:
-		"Production-ready Next.js template powered by PandaCSS and HeadlessUI.",
+	title: "dbots.fun | Discord botlist",
+	description: "Find bots that match your interests",
 };
 
 export default function RootLayout({
@@ -23,9 +21,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<Header />
-				<Container>
-					<main className={css({ py: "2em" })}>{children}</main>
-				</Container>
+				<Container py={5}>{children}</Container>
 			</body>
 		</html>
 	);

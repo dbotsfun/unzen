@@ -4,6 +4,7 @@ import { styled } from "@/styled-system/jsx";
 export const input = cva({
 	base: {
 		transitionDuration: "normal",
+		w: "full",
 		outline: "none",
 		px: 3,
 		py: 2,

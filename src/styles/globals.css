@@ -1,1 +1,13 @@
 @layer reset, base, tokens, recipes, utilities;
+
+body {
+	background-image: linear-gradient(
+			var(--colors-slate-900) 1px,
+			transparent 1px
+		), linear-gradient(to right, var(--colors-slate-900) 1px, transparent 1px);
+	background-size: 100px 100px;
+}
+
+.mask {
+	mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}

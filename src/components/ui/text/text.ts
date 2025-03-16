@@ -8,7 +8,7 @@ export const text = cva({
 		letterSpacing: "0",
 		textDecoration: "None",
 		textTransform: "None",
-		color: "gray.300",
+		color: "slate.300",
 	},
 	variants: {
 		size: {
@@ -25,9 +25,9 @@ export const text = cva({
 		variant: {
 			link: {
 				textDecoration: "underline",
-				color: "gray.50"
-			}
-		}
+				color: "slate.50",
+			},
+		},
 	},
 	defaultVariants: {
 		size: "md",

@@ -6,6 +6,7 @@ export const badge = cva({
 		alignItems: "center",
 		display: "inline-flex",
 		justifyContent: "center",
+		gap: 1,
 		position: "relative",
 		whiteSpace: "nowrap",
 		borderRadius: "md",
@@ -23,6 +24,14 @@ export const badge = cva({
 					base: "brand/10",
 				},
 				color: "brand",
+			},
+			secondary: {
+				bg: {
+					base: "slate.900",
+				},
+				borderWidth: 1,
+				borderColor: "slate.800",
+				color: "slate.300",
 			},
 		},
 	},

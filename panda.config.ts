@@ -12,7 +12,7 @@ export default defineConfig({
 			tokens: {
 				colors: {
 					brand: {
-						value: "#53eafd",
+						value: "#38bdf8",
 					},
 				},
 			},
@@ -21,8 +21,8 @@ export default defineConfig({
 	globalCss: {
 		extend: {
 			body: {
-				bg: "gray.950",
-				color: "gray.50",
+				bg: "slate.950",
+				color: "slate.50",
 			},
 		},
 	},
